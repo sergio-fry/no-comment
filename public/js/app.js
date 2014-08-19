@@ -1,9 +1,9 @@
 (function($) {
-  $("#add-page-form").on("submit", function() {
-    var url = $(this).find("#url").val().replace(/^\s+/, "").replace(/\s+$/, "");
+  $(".add-page-form").on("submit", function() {
+    var url = $(this).find("[name='url']").val().replace(/^\s+/, "").replace(/\s+$/, "");
 
     if(url == "") {
-      $(this).find("#url").focus();
+      $(this).find("[name='url']").focus();
     } else {
       var domain = url.replace(/^https?:\/\//, "").split("/")[0];
 
