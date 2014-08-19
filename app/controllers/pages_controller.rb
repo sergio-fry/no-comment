@@ -20,6 +20,11 @@ class PagesController < Sinatra::Base
       PageParser.perform_async(@page.id)
     end
 
-    erb "pages/comments".to_sym, :locals => { :page => @page }, :layout => :layout
+    if @page.title.blank?
+      erb "pages/comments_waiting".to_sym, :locals => { :page => @page }, :layout => :layout
+    else
+      erb "pages/comments".to_sym, :locals => { :page => @page }, :layout => :layout
+    end
+
   end
 end
