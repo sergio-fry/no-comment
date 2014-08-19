@@ -1,3 +1,7 @@
+<style>
+  .article .embedly-card { text-decoration: none; color: black; }
+</style>
+
 <script>
   window.page_id = window.location.pathname.replace("/comments/", "").split("/").map(function(c) { return decodeURIComponent(c) }).join("/");
   window.article_url = "http://" + page_id;
@@ -5,7 +9,7 @@
 
 <div class="article" id="article">
   <script>
-    document.write('<a class="embedly-card" href="'+article_url+'">'+page_id+'</a>');
+    document.write('<a class="embedly-card" href="'+article_url+'">Загружаю страницу '+page_id+'</a>');
   </script>
 
   <script>(function(a){var b="embedly-platform",c="script";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b;d.async=true;d.src=("https:"===document.location.protocol?"https":"http")+"://cdn.embedly.com/widgets/platform.js";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}})(document);</script>
