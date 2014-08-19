@@ -1,7 +1,16 @@
-<div class="article">
-  <a class="embedly-card" href="<%= url %>"><%= url %></a>
-<script>(function(a){var b="embedly-platform",c="script";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b;d.async=true;d.src=("https:"===document.location.protocol?"https":"http")+"://cdn.embedly.com/widgets/platform.js";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}})(document);</script>
+<script>
+  window.page_id = window.location.pathname.replace("/comments/", "").split("/").map(function(c) { return decodeURIComponent(c) }).join("/");
+  window.article_url = "http://" + page_id;
+</script>
+
+<div class="article" id="article">
+  <script>
+    document.write('<a class="embedly-card" href="'+article_url+'">'+article_url+'</a>');
+  </script>
+
+  <script>(function(a){var b="embedly-platform",c="script";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b;d.async=true;d.src=("https:"===document.location.protocol?"https":"http")+"://cdn.embedly.com/widgets/platform.js";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}})(document);</script>
 </div>
+
 <br />
 
 <div id="hypercomments_widget"></div>
@@ -11,8 +20,8 @@
 _hcwp = window._hcwp || [];
 var _hc_settings = {
   widget:"Stream", widget_id:18390,
-  xid: "<%= page_id %>".split("#")[0],
-  href: "<%= page_id %>".split("#")[0]
+  xid: page_id.split("#")[0],
+  href: page_id.split("#")[0]
 };
 _hcwp.push(_hc_settings);
 

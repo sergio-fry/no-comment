@@ -6,10 +6,7 @@ class PagesController < Sinatra::Base
     erb "pages/index".to_sym, :locals => { }, :layout => :layout
   end
 
-  get %r{/comments/(.+)} do |url_without_protocol|
-    url = "http://" + url_without_protocol
-    page_id = url_without_protocol
-
-    erb "pages/comments".to_sym, :locals => { :url => url, :page_id => page_id }, :layout => :layout
+  get %r{/comments/.*} do
+    erb "pages/comments".to_sym, :locals => { }, :layout => :layout
   end
 end
