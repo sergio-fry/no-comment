@@ -1,18 +1,33 @@
+<% content_for :meta_title do %>
+<%= page.title %>
+<% end %>
+
+<% content_for :meta_description do %>
+<%= page.description %>
+<% end %>
+
+<% content_for :share_image do %>
+<%= page.img %>
+<% end %>
+
 <style>
   .article .embedly-card { text-decoration: none; color: black; }
 </style>
 
-<script>
-  window.page_id = window.location.pathname.replace("/comments/", "").split("/").map(function(c) { return decodeURIComponent(c) }).join("/");
-  window.article_url = "http://" + page_id;
-</script>
-
 <div class="article" id="article">
   <script>
-    document.write('<a class="embedly-card" href="'+article_url+'">Загружаю страницу '+page_id+'</a>');
+    document.write('<a class="embedly-card" href="<%= page.url %>">Загружаю страницу <%= page.url %></a>');
   </script>
 
   <script>(function(a){var b="embedly-platform",c="script";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b;d.async=true;d.src=("https:"===document.location.protocol?"https":"http")+"://cdn.embedly.com/widgets/platform.js";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}})(document);</script>
+</div>
+
+<div class="share-buttons">
+<center>
+  <script type="text/javascript" src="//yandex.st/share/share.js"
+charset="utf-8"></script>
+  <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareQuickServices="vkontakte,odnoklassniki,facebook,twitter,moimir,gplus" data-yashareTheme="counter"></div> 
+</center>
 </div>
 
 <br />
@@ -24,8 +39,8 @@
 _hcwp = window._hcwp || [];
 var _hc_settings = {
   widget:"Stream", widget_id:20856,
-  xid: page_id.split("#")[0],
-  href: page_id.split("#")[0]
+  xid: "<%= page.url %>".replace(/http:\/\//, ""),
+  href: "<%= page.url %>".replace(/http:\/\//, "")
 };
 _hcwp.push(_hc_settings);
 

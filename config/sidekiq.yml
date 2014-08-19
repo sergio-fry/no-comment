@@ -1,0 +1,11 @@
+---
+:concurrency: 5
+development:
+  :concurrency: 2
+production:
+  :concurrency: 10
+:queues:
+  - [low_priority,1]
+  - [default,3]
+  - [high_priority, 5]
+

@@ -1,4 +1,10 @@
 require "./config/environment.rb"
 
+require 'sidekiq/web'
 
-run PagesController
+
+Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
+  [user, password] == ["admin", "lowkick"]
+end
+
+run Rack::URLMap.new('/' => PagesController, '/sidekiq' => Sidekiq::Web)

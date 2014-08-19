@@ -1,0 +1,11 @@
+development:
+  adapter:  postgresql
+  database: no_comment_development
+  encoding: "utf8"
+
+test:
+  adapter:  postgresql
+  database: no_comment_test
+  encoding: "utf8"
+
+
