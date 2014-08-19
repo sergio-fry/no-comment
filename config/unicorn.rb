@@ -12,7 +12,7 @@ before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
 
-  @sidekiq_pid ||= spawn("bundle exec sidekiq -C config/sidekiq.yml")
+  @sidekiq_pid ||= spawn("bundle exec sidekiq -C config/sidekiq.yml -r #{File.join(App.root, "config/environment.rb")}")
 end
 
 after_fork do |server, worker|
@@ -21,7 +21,7 @@ after_fork do |server, worker|
   end
 
   defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
+    ActiveRecord::Base.establish_connection App.config.database_settings
 end
 
 
