@@ -5,9 +5,11 @@ class PagesController < Sinatra::Base
 
   helpers do
     def page_path(url)
-      uri  = Addressable::URI.parse(url)
-      path_escaped = uri.path.split("/").map { |c| URI.escape(c) }.join("/")
-      "/comments/#{Page.prepare_domain(uri.host)}#{path_escaped}"
+      path = url.strip.sub(/https?:\/\//, "")
+
+      path = path.split("/").map { |c| URI.escape(c) }.join("/")
+
+      "/comments/#{path}"
     end
 
     def video_tag(url)
