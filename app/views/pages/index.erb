@@ -1,5 +1,14 @@
+<% content_for :meta_description do %>
+Здесь можно обсуждать то, что обсуждать запрещено. Владелец сайта запретил комменатрии? Комментировать можно на No Comment!
+<% end %>
+
 <style>
-.devider { font-size: 300%; padding-top: 40px; padding-bottom: 40px; }
+  .devider { font-size: 300%; padding-top: 40px; padding-bottom: 40px; }
+
+  .site-preview { float: left; padding-right: 20px; width: 200px; height: 200px; overflow: hidden; }
+  .site-preview .logo { background: grey; width: 180px; height: 100px }
+  .site-preview .description { color: grey; font-size: 80% }
+  p.nl  { clear: both }
 </style>
 
 <form id="add-page-form" class="add-page-form">
@@ -20,13 +29,13 @@
 <br />
 <br />
 
-<center><h1>Сейчас комментируют</h1></center>
+<center><h1>Сейчас обсуждают</h1></center>
 
-<table>
-  <% for group in Page.published.order("created_at DESC").limit(6).in_groups(2, false) %>
+<table cellspacing="10px">
+  <% for group in Page.published.order("created_at DESC").limit(9).in_groups_of(3, false) %>
     <tr>
       <% for page in group %>
-        <td>
+        <td valign="top">
           <div class="article">
             <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
           </div>
@@ -42,6 +51,7 @@
 
 <center><h1>Для чего этот сайт?</h1></center>
 
+Есть много интересных сайтов, пользователи которых лишены возможности высказать свое мнение. Иногда промолчать бывает сложно.
 
 <ul>
   <li>владелец сайта отключил комментарии к статье</li>
@@ -51,6 +61,22 @@
 
 <strong>… а Вы все равно хотите высказаться?</strong>
 
+<p>Скопируйте url-адрес статьи или видео, создайте обсуждение на No Comment! и комментируйте.</p>
+
+<form id="add-page-form" class="add-page-form">
+  <table width="100%">
+    <tr>
+      <td width="100%" valign="top">
+        <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 100%" />
+      </td>
+      <td align="right" valign="top">
+        <input type="submit" value="Комментировать!" style="font-size: 100%" />
+        <em style="font-size: 90%">(без регистрации)</em>
+      </td>
+    </tr>
+  </table>
+</form>
+
 
 <br />
 <br />
@@ -58,23 +84,39 @@
 
 <center><h1>Потенциальные клиенты</h1></center>
 
-Есть много интересных сайтов, где комментарии отключены в принципе. Иногда промолчать бывает сложно.
+<p>Мы за <em>свободу слова</em>, но смотрите, сколько сайтов ограничивают обсуждение своих материалов!</p>
+
+<% clients = [
+  { :url => "http://www.vesti.ru" },
+  { :url => "http://ria.ru" },
+  { :url => "http://www.interfax.ru" },
+  { :url => "http://www.bbc.co.uk/russian", :desc => "Комментировать можно только некотоые статьи, коих меньшинство" },
+  { :url => "http://www.gazeta.ru" },
+  { :url => "http://sprotyv.info/ru", :desc => "Недавно запретили комментарии" },
+  { :url => "http://www.unian.net" },
+  { :url => "http://tvrain.ru", :desc => "Комментарии только для платных пользователей" },
+  { :url => "http://ru.tsn.ua" },
+  { :url => "http://youtube.com", :desc => "Иногда видео нельзя комментировать" },
+  { :url => "http://vk.com", :desc => "Некоторые пользователи запрещают комментарии" },
+  { :url => "http://facebook.com", :desc => "Некоторые пользователи запрещают комментарии" },
+  { :url => "http://livejournal.com", :desc => "К некоторым статьям комментарии запрещены" },
+  { :url => "http://roi.ru" },
+  { :url => "http://www.snob.ru" },
+] %>
 
 
-<a href="http://www.vesti.ru">www.vesti.ru</a>
-<a href="http://ria.ru">ria.ru</a>
-<a href="http://www.interfax.ru">www.interfax.ru</a>
-<a href="http://www.bbc.co.uk/russian">www.bbc.co.uk/russian</a>
-<a href="http://www.gazeta.ru">www.gazeta.ru</a>
-<a href="http://sprotyv.info/ru">sprotyv.info/ru</a>
-<a href="http://www.unian.net">www.unian.net</a>
-<a href="http://tvrain.ru">tvrain.ru</a>
-<a href="http://ru.tsn.ua">ru.tsn.ua</a>
-<a href="http://youtube.com">youtube.com</a>
-<a href="http://vk.com">vk.com</a>
-<a href="http://facebook.com">facebook.com</a>
-<a href="http://livejournal.com">livejournal.com</a>
-<a href="http://roi.ru">roi.ru</a>
-<a href="http://www.snob.ru">www.snob.ru</a>
+<% for client in clients %>
+  <div class="site-preview">
+    <div class="logo"></div>
+    <div class="link"><a href="/comments/<%= Page.prepare_domain(URI(client[:url]).host) %>"><%= URI(client[:url]).host %></a></div>
+    <div class="description"><%= client[:desc] || "Комментарии запрещены" %></div>
+  </div>
+<% end %>
+
+<p class="nl"></p>
+
+<p>Каждый их пользователь потенциально -- наш!</p>
+
+
 
 

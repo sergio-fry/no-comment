@@ -1,6 +1,11 @@
 <% content_for :meta_title do %>
-<%= domain %> - комментарии на No Comment
+Комментарии для сайта <%= domain %> на No Comment!
 <% end %>
+
+<% content_for :meta_description do %>
+Если комментарии на сайте <%= domain %> запрещены, просто введите адрес страницы с сайта <%= domain %> и начните обсуждать ее с друзьями.
+<% end %>
+
 
 <h1><%= domain.camelize %></h1>
 <p>Если <strong>комментарии</strong> на сайте <%= domain %> <em>запрещены</em>, просто введите адрес страницы с сайта <%= domain %> и начните обсуждать ее с друзьями:</p>
@@ -19,7 +24,7 @@
   </table>
 </form>
 
-<% pages = Page.published.where(:domain => Page.prepare_domain(domain)).order("created_at DESC").limit(10) %>
+<% pages = Page.published.where(:domain => Page.prepare_domain(domain)).order("created_at DESC").limit(9) %>
 <% if pages.present? %>
   <br />
   <br />
@@ -31,7 +36,7 @@
     <% for group in pages.in_groups_of(3, false) %>
       <tr>
         <% for page in group %>
-          <td>
+          <td valign="top">
             <div class="article">
               <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
             </div>
