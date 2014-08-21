@@ -26,9 +26,10 @@ class Page < ActiveRecord::Base
 
       result = "#{uri.scheme}://#{domain}#{uri.path}"
 
-      # NOTE: не учитываем ничего, кроме path, чтобы не захватить
-      #  маркетинговый мусор (будут дубликаты страниц)
-      #result += "?#{uri.query}" if uri.query.present?
+      # TODO: очищать маркетинговый мусор (будут дубликаты страниц)
+
+      result += "?#{uri.query}" if uri.query.present?
+      
       #result += "##{uri.fragment}" if uri.fragment.present?
 
       self["url"] = result
