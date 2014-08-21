@@ -24,6 +24,10 @@ class PagesController < Sinatra::Base
     erb "pages/index".to_sym, :locals => { }, :layout => :layout
   end
 
+  get %r{/comments/?$} do
+    erb "pages/list".to_sym, :locals => { }, :layout => :layout
+  end
+
   # domain
   get %r{/comments/([^/]+)[/]?$} do |domain|
     erb "pages/domain".to_sym, :locals => { :domain => domain }, :layout => :layout

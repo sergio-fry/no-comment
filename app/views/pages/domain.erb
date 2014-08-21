@@ -24,7 +24,7 @@
   </table>
 </form>
 
-<% pages = Page.published.where(:domain => Page.prepare_domain(domain)).order("created_at DESC").limit(9) %>
+<% pages = Page.published.where(:domain => Page.prepare_domain(domain)).order("created_at DESC").limit(81) %>
 <% if pages.present? %>
   <br />
   <br />
@@ -47,3 +47,9 @@
   </table>
 <% end %>
 
+<br />
+<br />
+<br />
+<br />
+
+<a href="/comments">Список всех сайтов</a>
