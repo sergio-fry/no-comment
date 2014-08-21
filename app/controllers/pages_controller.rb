@@ -15,6 +15,8 @@ class PagesController < Sinatra::Base
     end
   end
 
+  use ActiveRecord::ConnectionAdapters::ConnectionManagement
+
   set :public_folder, File.join(App.root, 'public')
   set :views, File.join(App.root, 'app/views')
 
