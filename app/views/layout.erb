@@ -3,14 +3,15 @@
   <meta charset='UTF-8' />
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <meta content="комментарии, запрещено, отключено, забанен, зааблокирован, no comment" name="keywords"></meta>
 
-  <meta name="description" content="<%= yield_content :meta_description %>" /> 
-  <meta property="og:description" content="<%= yield_content :meta_description %>" />
+  <meta content="комментарии, комментировать, запрещено, отключено, забанен, заблокирован, no comment" name="keywords"></meta>
+
+  <meta name="description" content="<%= yield_content(:meta_description).gsub(/\s+/, " ").mb_chars.truncate(160, omission: "…") %>" /> 
+  <meta property="og:description" content="<%= yield_content(:meta_description).gsub(/\s+/, " ").mb_chars.truncate(160, omission: "…") %>" />
 
   <meta property="og:type" content="article" />
 
-  <meta property="og:title" content="<%= yield_content :meta_title %>" />
+  <meta property="og:title" content="<%= yield_content(:meta_title).truncate(140, omission: "…") %>" />
   <meta property="og:image" content="<%= yield_content :share_image %>" />
   <link rel="image_src" href="<%= yield_content :share_image %>" />
 
@@ -22,6 +23,8 @@
     #page { width: 100%;  max-width: 750px; text-align: left; }
     #container { min-height: 300px }
     #logo a { text-decoration: none; color: black }
+    
+    .hidden { display: none }
   </style>
 </head>
 <body>

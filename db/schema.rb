@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819145600) do
+ActiveRecord::Schema.define(version: 20140821080200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,11 +26,14 @@ ActiveRecord::Schema.define(version: 20140819145600) do
     t.text     "additional_info", default: "--- {}\n"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "text"
+    t.integer  "status",          default: 0,          null: false
   end
 
   add_index "pages", ["comments_count"], name: "index_pages_on_comments_count", using: :btree
   add_index "pages", ["created_at"], name: "index_pages_on_created_at", using: :btree
   add_index "pages", ["domain"], name: "index_pages_on_domain", using: :btree
+  add_index "pages", ["status"], name: "index_pages_on_status", using: :btree
   add_index "pages", ["updated_at"], name: "index_pages_on_updated_at", using: :btree
   add_index "pages", ["url"], name: "index_pages_on_url", using: :btree
 

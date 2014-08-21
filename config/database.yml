@@ -1,6 +1,7 @@
 development:
   adapter:  postgresql
   database: no_comment_development
+  pool: 5
   encoding: "utf8"
 
 test:

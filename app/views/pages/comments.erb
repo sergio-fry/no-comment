@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :meta_description do %>
-<%= page.description %>
+<%= page.text %>
 <% end %>
 
 <% content_for :share_image do %>
@@ -11,16 +11,37 @@
 <% end %>
 
 <style>
-  .article .embedly-card { text-decoration: none; color: black; }
 </style>
 
-<div class="article" id="article">
-  <script>
-    document.write('<a class="embedly-card" href="<%= page.url %>">Загружаю страницу <%= page.url %></a>');
-  </script>
+<small>Владелец сайта <a href="/comments/<%= page.domain %>"><%= page.domain %></a> запретил комментарии к статье "<%= page.title %>". А мы -- разрешаем! Комментируйте на здоровье.</small>
 
-  <script>(function(a){var b="embedly-platform",c="script";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b;d.async=true;d.src=("https:"===document.location.protocol?"https":"http")+"://cdn.embedly.com/widgets/platform.js";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}})(document);</script>
-</div>
+<h1><%= page.title %></h1>
+
+Источник: <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="http://<%= page.domain %>" target="_blank"><%= page.domain %></a>
+
+<% if page.img.present? %>
+  <img src="<%= page.img %>" />
+<% end %>
+
+<% if page.video.present? %>
+  <%= video_player page.video %>
+<% end %>
+
+<% if page.text.mb_chars.size > 240 %>
+  <div class="widget" data-widget="toggable">
+    <div class="section-1">
+      <p><%= page.text.truncate(240, omission: "…") %></p>
+    </div>
+    <div class="section-2 hidden">
+      <p><%= page.text %></p>
+    </div>
+    <button class="toggle-button" data-text-1="Развернуть" data-text-2="Свернуть">Развернуть</button>
+  </div>
+<% else %>
+  <p><%= page.text %></p>
+<% end %>
+
+
 
 <div class="share-buttons">
 <center>
@@ -32,6 +53,9 @@ charset="utf-8"></script>
 
 <br />
 
+
+<br />
+<small>Комментировать можно без регистрации</small>
 <div id="hypercomments_widget"></div>
 <a href="http://hypercomments.com" class="hc-link" title="comments widget">комментарии на технологии HyperComments</a>
 
@@ -55,3 +79,16 @@ _hcwp.push(_hc_settings);
  })();
 </script>
 
+<br />
+
+<% other_pages = Page.where(:domain => page.domain).where.not(:id => page.id).order("created_at DESC").limit(3) %>
+
+<% if other_pages.present? %>
+  <strong>Что еще комментируют на сайте <a href="/comments/<%= page.domain %>"><%= page.domain %></a></strong>
+  <br />
+  <br />
+  <% for page in other_pages %>
+    <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
+    <br />
+  <% end %>
+<% end %>

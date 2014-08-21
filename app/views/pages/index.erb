@@ -3,12 +3,38 @@
 </style>
 
 <form id="add-page-form" class="add-page-form">
-  <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 150%" />
-  <br />
-  <br />
-  <input type="submit" value="Хочу комментировать!" style="font-size: 150%" />
-  <em style="font-size: 120%">(без регистрации)</em>
+  <table width="100%">
+    <tr>
+      <td width="100%" valign="top">
+        <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 150%" />
+      </td>
+      <td align="right" valign="top">
+        <input type="submit" value="Комментировать!" style="font-size: 150%" />
+        <em style="font-size: 120%">(без регистрации)</em>
+      </td>
+    </tr>
+  </table>
 </form>
+
+<br />
+<br />
+<br />
+
+<center><h1>Сейчас комментируют</h1></center>
+
+<table>
+  <% for group in Page.published.order("created_at DESC").limit(6).in_groups(2, false) %>
+    <tr>
+      <% for page in group %>
+        <td>
+          <div class="article">
+            <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
+          </div>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
 
 <br />
 <br />

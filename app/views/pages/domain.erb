@@ -1,0 +1,44 @@
+<% content_for :meta_title do %>
+<%= domain %> - комментарии на No Comment
+<% end %>
+
+<h1><%= domain.camelize %></h1>
+<p>Если <strong>комментарии</strong> на сайте <%= domain %> <em>запрещены</em>, просто введите адрес страницы с сайта <%= domain %> и начните обсуждать ее с друзьями:</p>
+
+<form id="add-page-form" class="add-page-form">
+  <table width="100%">
+    <tr>
+      <td width="100%" valign="top">
+        <input type="text" name="url" id="url" placeholder="Например, http://<%= domain %>/stranica-123" style="width: 100%; font-size: 150%" />
+      </td>
+      <td align="right" valign="top">
+        <input type="submit" value="Комментировать!" style="font-size: 150%" />
+        <em style="font-size: 120%">(без регистрации)</em>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<% pages = Page.published.where(:domain => Page.prepare_domain(domain)).order("created_at DESC").limit(10) %>
+<% if pages.present? %>
+  <br />
+  <br />
+  <br />
+  <br />
+  <h2>Материалы, которые уже комментируют</h2>
+
+  <table cellspacing="10px">
+    <% for group in pages.in_groups_of(3, false) %>
+      <tr>
+        <% for page in group %>
+          <td>
+            <div class="article">
+              <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+

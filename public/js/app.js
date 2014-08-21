@@ -15,4 +15,19 @@
     return false;
   });
 
+  $(".widget[data-widget='toggable']").each(function() {
+    var w = $(this);
+
+    w.find(".toggle-button").click(function() {
+      w.find(".section-1").toggle();
+      w.find(".section-2").toggle();
+
+      if(w.find(".section-1").is(":visible")) {
+        $(this).text($(this).attr("data-text-1"));
+      } else {
+        $(this).text($(this).attr("data-text-2"));
+      }
+    });
+  });
+
 })(jQuery);
