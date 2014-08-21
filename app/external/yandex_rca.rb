@@ -8,7 +8,7 @@ class YandexRca
     request_url = "http://rca.yandex.com/?key=#{ENV["RCA_KEY"]}&url=#{url_encoded}"
     request_url += "&full=1" if options[:full]
 
-    uri = URI(request_url)
+    uri = Addressable::URI.parse(request_url)
     JSON.parse Net::HTTP.get(uri)
   end
 end

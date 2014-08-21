@@ -110,7 +110,7 @@
 <% for client in clients %>
   <div class="site-preview">
     <div class="logo"></div>
-    <div class="link"><a href="/comments/<%= Page.prepare_domain(URI(client[:url]).host) %>"><%= URI(client[:url]).host %></a></div>
+    <div class="link"><a href="/comments/<%= Page.prepare_domain(Addressable::URI.paprse(client[:url]).host) %>"><%= URI(client[:url]).host %></a></div>
     <div class="description"><%= client[:desc] || "Комментарии запрещены" %></div>
   </div>
 <% end %>

@@ -5,7 +5,7 @@ class PagesController < Sinatra::Base
 
   helpers do
     def page_path(url)
-      uri  = URI(url)
+      uri  = Addressable::URI.parse(url)
       path_escaped = uri.path.split("/").map { |c| URI.escape(c) }.join("/")
       "/comments/#{Page.prepare_domain(uri.host)}#{path_escaped}"
     end
