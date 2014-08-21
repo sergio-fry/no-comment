@@ -13,6 +13,15 @@ class PagesController < Sinatra::Base
     def video_tag(url)
       "<iframe src='#{url}' width='320px' height='240px' noborder noscroll></iframe>"
     end
+
+    def favicon_url(url_or_domail)
+      url = url_or_domail.clone
+      url = "http://" + url unless url.match(/^https?:/)
+
+      domain = Addressable::URI.parse(url).try :host
+
+      "http://g.etfv.co/http://#{domain}"
+    end
   end
 
   use ActiveRecord::ConnectionAdapters::ConnectionManagement

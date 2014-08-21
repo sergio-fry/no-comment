@@ -17,7 +17,7 @@
 
 <h1><%= page.title %></h1>
 
-Источник: <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="http://<%= page.domain %>" target="_blank"><%= page.domain %></a>
+Источник: <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="http://<%= page.domain %>" target="_blank"><%= page.domain %></a>
 
 <% if page.img.present? %>
   <img src="<%= page.img %>" />
@@ -88,7 +88,7 @@ _hcwp.push(_hc_settings);
   <br />
   <br />
   <% for page in other_pages %>
-    <img src="http://#{page.domain}/favicon.ico" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
+    <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
     <br />
   <% end %>
 <% end %>
