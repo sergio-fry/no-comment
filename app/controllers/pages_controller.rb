@@ -7,7 +7,7 @@ class PagesController < Sinatra::Base
     def page_path(url)
       path = url.strip.sub(/https?:\/\//, "")
 
-      path = path.split("/").map { |c| URI.escape(c) }.join("/")
+      path = path.split("/").map { |c| URI.escape(c, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")) }.join("/")
 
       "/comments/#{path}"
     end
