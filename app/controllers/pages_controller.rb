@@ -24,6 +24,10 @@ class PagesController < Sinatra::Base
 
       "http://g.etfv.co/http://#{domain}"
     end
+
+    def simple_format(text)
+      text.split("\n").map { |l| "<p>#{l}</p>" }.join
+    end
   end
 
   use ActiveRecord::ConnectionAdapters::ConnectionManagement

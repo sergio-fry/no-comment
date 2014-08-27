@@ -13,7 +13,7 @@
 <style>
 </style>
 
-<small>Владелец сайта <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="/comments/<%= page.domain %>"><%= page.domain %></a> запретил комментарии к статье <em>"<%= page.title %>"</em>. <strong>А мы -- разрешаем!</strong> Комментируйте на здоровье.</small>
+<small>Владелец сайта <img src="<%= favicon_url(page.domain) %>" width="11" height="11" /> <a href="/comments/<%= page.domain %>"><%= page.domain %></a> запретил комментарии к статье <em>"<%= page.title %>"</em>. <strong>А мы -- разрешаем!</strong> Комментируйте на здоровье.</small>
 
 <h1><%= page.title %></h1>
 
@@ -27,10 +27,10 @@
 <% if page.text.mb_chars.size > 512 %>
   <div class="widget" data-widget="toggable">
     <div class="section-1">
-      <p><%= page.text.truncate(512, omission: "…") %></p>
+      <p><%= simple_format(page.text.truncate(512, omission: "…")) %></p>
     </div>
     <div class="section-2 hidden">
-      <p><%= page.text.split("\n").map { |l| "<p>#{l}</p>" }.join %></p>
+      <p><%= simple_format page.text %></p>
 
       <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
       <br />
@@ -39,7 +39,7 @@
     <button class="toggle-button" data-text-1="Развернуть" data-text-2="Свернуть">Развернуть</button>
   </div>
 <% else %>
-  <p><%= page.text %></p>
+  <p><%= simple_format page.text %></p>
   <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
 <% end %>
 
