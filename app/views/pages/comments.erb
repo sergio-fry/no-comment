@@ -21,7 +21,7 @@
 
 
 <% if page.video.present? %>
-  <%= video_tag page.video %>
+  <p><%= video_tag page.video %></p>
 <% elsif page.img.present? %>
   <img src="<%= page.img %>" />
 <% end %>
@@ -29,7 +29,7 @@
 <% if page.text.mb_chars.size > 512 %>
   <div class="widget" data-widget="toggable">
     <div class="section-1">
-      <p><%= page.text.truncate(240, omission: "…") %></p>
+      <p><%= page.text.truncate(512, omission: "…") %></p>
     </div>
     <div class="section-2 hidden">
       <p><%= page.text %></p>
