@@ -7,13 +7,13 @@ class PagesController < Sinatra::Base
     def page_path(url)
       path = url.strip.sub(/https?:\/\//, "")
 
-      path = path.split("/").map { |c| URI.escape(c, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")) }.join("/")
+      path = path.split("/").map { |c| URI.encode_www_form_component(c) }.join("/")
 
       "/comments/#{path}"
     end
 
     def video_tag(url)
-      "<iframe src='#{url}' width='320px' height='240px' noborder noscroll></iframe>"
+      "<iframe src='#{url}' width='420px' height='315px'  frameborder='0' allowfullscreen></iframe>"
     end
 
     def favicon_url(url_or_domail)

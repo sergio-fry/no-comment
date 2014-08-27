@@ -24,7 +24,7 @@
 <% end %>
 
 <% if page.video.present? %>
-  <%= video_player page.video %>
+  <%= video_tag page.video %>
 <% end %>
 
 <% if page.text.mb_chars.size > 240 %>
