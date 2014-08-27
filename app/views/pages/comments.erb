@@ -33,6 +33,8 @@
       <p><%= page.text.split("\n").map { |l| "<p>#{l}</p>" }.join %></p>
 
       <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
+      <br />
+      <br />
     </div>
     <button class="toggle-button" data-text-1="Развернуть" data-text-2="Свернуть">Развернуть</button>
   </div>
