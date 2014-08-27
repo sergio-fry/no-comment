@@ -17,7 +17,7 @@
 
 <h1><%= page.title %></h1>
 
-<img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="http://<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
+<img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
 
 
 <% if page.video.present? %>
