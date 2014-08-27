@@ -13,11 +13,9 @@
 <style>
 </style>
 
-<small>Владелец сайта <a href="/comments/<%= page.domain %>"><%= page.domain %></a> запретил комментарии к статье "<%= page.title %>". А мы -- разрешаем! Комментируйте на здоровье.</small>
+<small>Владелец сайта <a href="/comments/<%= page.domain %>"><%= page.domain %></a> запретил комментарии к статье <em>"<%= page.title %>"</em>. <strong>А мы -- разрешаем!</strong> Комментируйте на здоровье.</small>
 
 <h1><%= page.title %></h1>
-
-<img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
 
 
 <% if page.video.present? %>
@@ -33,11 +31,14 @@
     </div>
     <div class="section-2 hidden">
       <p><%= page.text %></p>
+
+      <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
     </div>
     <button class="toggle-button" data-text-1="Развернуть" data-text-2="Свернуть">Развернуть</button>
   </div>
 <% else %>
   <p><%= page.text %></p>
+  <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
 <% end %>
 
 
