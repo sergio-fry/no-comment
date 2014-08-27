@@ -19,15 +19,14 @@
 
 Источник: <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="http://<%= page.domain %>" target="_blank"><%= page.domain %></a>
 
-<% if page.img.present? %>
-  <img src="<%= page.img %>" />
-<% end %>
 
 <% if page.video.present? %>
   <%= video_tag page.video %>
+<% elsif page.img.present? %>
+  <img src="<%= page.img %>" />
 <% end %>
 
-<% if page.text.mb_chars.size > 240 %>
+<% if page.text.mb_chars.size > 512 %>
   <div class="widget" data-widget="toggable">
     <div class="section-1">
       <p><%= page.text.truncate(240, omission: "…") %></p>
