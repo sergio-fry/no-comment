@@ -1,46 +1,46 @@
 <% content_for :meta_title do %>
-<%= page.title %>
+<%= @page.title %>
 <% end %>
 
 <% content_for :meta_description do %>
-<%= page.text %>
+<%= @page.text %>
 <% end %>
 
 <% content_for :share_image do %>
-<%= page.img %>
+<%= @page.img %>
 <% end %>
 
 <style>
 </style>
 
-<small>Владелец сайта <img src="<%= favicon_url(page.domain) %>" width="11" height="11" /> <a href="/comments/<%= page.domain %>"><%= page.domain %></a> запретил комментарии к статье <em>"<%= page.title %>"</em>. <strong>А мы -- разрешаем!</strong> Комментируйте на здоровье.</small>
+<small>Владелец сайта <img src="<%= favicon_url(@page.domain) %>" width="11" height="11" /> <a href="/comments/<%= @page.domain %>"><%= @page.domain %></a> запретил комментарии к статье <em>"<%= @page.title %>"</em>. <strong>А мы &mdash; разрешаем!</strong> Комментируйте на здоровье.</small>
 
-<h1><%= page.title %></h1>
+<h1><%= @page.title %></h1>
 
 
-<% if page.video.present? %>
-  <p><%= video_tag page.video %></p>
-<% elsif page.img.present? %>
-  <img src="<%= page.img %>" />
+<% if @page.video.present? %>
+  <p><%= video_tag @page.video %></p>
+<% elsif @page.img.present? %>
+  <img src="<%= @page.img %>" />
 <% end %>
 
-<% if page.text.mb_chars.size > 512 %>
+<% if @page.text.mb_chars.size > 512 %>
   <div class="widget" data-widget="toggable">
     <div class="section-1">
-      <p><%= simple_format(page.text.truncate(512, omission: "…")) %></p>
+      <p><%= simple_format(@page.text.truncate(512, omission: "…")) %></p>
     </div>
     <div class="section-2 hidden">
-      <p><%= simple_format page.text %></p>
+      <p><%= simple_format @page.text %></p>
 
-      <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
+      <img src="<%= favicon_url(@page.domain) %>" width="16" height="16" /> <a href="<%= @page.url %>" target="_blank" title="Источник"><%= @page.domain %></a>
       <br />
       <br />
     </div>
     <button class="toggle-button" data-text-1="Развернуть" data-text-2="Свернуть">Развернуть</button>
   </div>
 <% else %>
-  <p><%= simple_format page.text %></p>
-  <img src="<%= favicon_url(page.domain) %>" width="16" height="16" /> <a href="<%= page.url %>" target="_blank" title="Источник"><%= page.domain %></a>
+  <p><%= simple_format @page.text %></p>
+  <img src="<%= favicon_url(@page.domain) %>" width="16" height="16" /> <a href="<%= @page.url %>" target="_blank" title="Источник"><%= @page.domain %></a>
 <% end %>
 
 
@@ -57,7 +57,6 @@ charset="utf-8"></script>
 
 
 <br />
-<small>Комментировать можно без регистрации</small>
 <div id="hypercomments_widget"></div>
 <a href="http://hypercomments.com" class="hc-link" title="comments widget">комментарии на технологии HyperComments</a>
 
@@ -65,8 +64,8 @@ charset="utf-8"></script>
 _hcwp = window._hcwp || [];
 var _hc_settings = {
   widget:"Stream", widget_id:20856,
-  xid: "<%= page.url %>".replace(/http:\/\//, ""),
-  href: "<%= page.url %>".replace(/http:\/\//, "")
+  xid: "<%= @page.url %>".replace(/http:\/\//, ""),
+  href: "<%= @page.url %>".replace(/http:\/\//, "")
 };
 _hcwp.push(_hc_settings);
 
@@ -83,10 +82,10 @@ _hcwp.push(_hc_settings);
 
 <br />
 
-<% other_pages = Page.where(:domain => page.domain).where.not(:id => page.id).order("created_at DESC").limit(3) %>
+<% other_pages = Page.where(:domain => @page.domain).where.not(:id => @page.id).order("created_at DESC").limit(3) %>
 
 <% if other_pages.present? %>
-  <strong>Что еще комментируют на сайте <a href="/comments/<%= page.domain %>"><%= page.domain %></a></strong>
+  <strong>Что еще комментируют на сайте <a href="/comments/<%= @page.domain %>"><%= @page.domain %></a></strong>
   <br />
   <br />
   <% for page in other_pages %>

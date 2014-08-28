@@ -1,20 +1,20 @@
 <% content_for :meta_title do %>
-Комментарии для сайта <%= domain %> на No Comment!
+Комментарии для сайта <%= @domain %> на No Comment!
 <% end %>
 
 <% content_for :meta_description do %>
-Если комментарии на сайте <%= domain %> запрещены, просто введите адрес страницы с сайта <%= domain %> и начните обсуждать ее с друзьями.
+Если комментарии на сайте <%= @domain %> запрещены, просто введите адрес страницы с сайта <%= @domain %> и начните обсуждать ее с друзьями.
 <% end %>
 
 
-<h1><%= domain.camelize %></h1>
-<p>Если <strong>комментарии</strong> на сайте <%= domain %> <em>запрещены</em>, просто введите адрес страницы с сайта <%= domain %> и начните обсуждать ее с друзьями:</p>
+<h1><img src="<%= favicon_url(@domain) %>" width="32" height="32" /> <%= @domain.split(".").map(&:camelize).join(".") %></h1>
+<p>Если <strong>комментарии</strong> на сайте <%= @domain %> <em>запрещены</em>, просто введите адрес страницы с сайта <%= @domain %> и начните обсуждать ее с друзьями:</p>
 
 <form id="add-page-form" class="add-page-form">
   <table width="100%">
     <tr>
       <td width="100%" valign="top">
-        <input type="text" name="url" id="url" placeholder="Например, http://<%= domain %>/stranica-123" style="width: 100%; font-size: 150%" />
+        <input type="text" name="url" id="url" placeholder="Например, http://<%= @domain %>/stranica-123" style="width: 100%; font-size: 150%" />
       </td>
       <td align="right" valign="top">
         <input type="submit" value="Комментировать!" style="font-size: 150%" />
@@ -24,7 +24,7 @@
   </table>
 </form>
 
-<% pages = Page.published.where(:domain => Page.prepare_domain(domain)).order("created_at DESC").limit(81) %>
+<% pages = Page.published.where(:domain => Page.prepare_domain(@domain)).order("created_at DESC").limit(81) %>
 <% if pages.present? %>
   <br />
   <br />

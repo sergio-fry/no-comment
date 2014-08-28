@@ -36,16 +36,17 @@ class PagesController < Sinatra::Base
   set :views, File.join(App.root, 'app/views')
 
   get "/" do
-    erb "pages/index".to_sym, :locals => { }, :layout => :layout
+    erb "pages/index".to_sym, :layout => :layout
   end
 
   get %r{/comments/?$} do
-    erb "pages/list".to_sym, :locals => { }, :layout => :layout
+    erb "pages/list".to_sym, :layout => :layout
   end
 
   # domain
   get %r{/comments/([^/]+)[/]?$} do |domain|
-    erb "pages/domain".to_sym, :locals => { :domain => domain }, :layout => :layout
+    @domain = domain
+    erb "pages/domain".to_sym, :layout => :layout
   end
 
   get %r{/comments/([^/]+)/(.*)} do |domain, path_escaped|
@@ -60,11 +61,11 @@ class PagesController < Sinatra::Base
 
     case @page.status
     when Page::STATUS_PUBLISHED
-      erb "pages/comments".to_sym, :locals => { :page => @page }, :layout => :layout
+      erb "pages/comments".to_sym, :layout => :layout
     when Page::STATUS_NEW
-      erb "pages/comments_waiting".to_sym, :locals => { :page => @page }, :layout => :layout
+      erb "pages/comments_waiting".to_sym, :layout => :layout
     else
-      #erb "pages/comments_error".to_sym, :locals => { :page => @page }, :layout => :layout
+      #erb "pages/comments_error".to_sym, :layout => :layout
       "Error! Contact: sergei.udalov@gmail.com"
     end
   end
