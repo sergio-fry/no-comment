@@ -6,7 +6,9 @@
   .devider { font-size: 300%; padding-top: 40px; padding-bottom: 40px; }
 
   .site-preview { float: left; padding-right: 20px; width: 200px; height: 200px; overflow: hidden; }
-  .site-preview .logo { background: grey; width: 180px; height: 100px }
+  .site-preview .logo { background: grey; width: 180px; height: 120px }
+  .site-preview .logo img { border: 0px; }
+  .site-preview .link { }
   .site-preview .description { color: grey; font-size: 80% }
   p.nl  { clear: both }
 </style>
@@ -108,9 +110,10 @@
 
 
 <% for client in clients %>
+  <% domain = Page.prepare_domain(Addressable::URI.parse(client[:url]).host) %>
   <div class="site-preview">
-    <div class="logo"></div>
-    <div class="link"><img src="<%= favicon_url(client[:url]) %>" width="16" height="16" /> <a href="/comments/<%= Page.prepare_domain(Addressable::URI.parse(client[:url]).host) %>"><%= URI(client[:url]).host %></a></div>
+    <div class="logo"><a href="/comments/<%= domain %>"><img src='/img/logos/<%= domain %>.jpeg' width="180" height="120" /></a></div>
+    <div class="link"><img src="<%= favicon_url(client[:url]) %>" width="16" height="16" /> <a href="/comments/<%= domain %>"><%= URI(client[:url]).host %></a></div>
     <div class="description"><%= client[:desc] || "Комментарии запрещены" %></div>
   </div>
 <% end %>
