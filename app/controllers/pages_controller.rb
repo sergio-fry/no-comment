@@ -69,4 +69,18 @@ class PagesController < Sinatra::Base
       "Error! Contact: sergei.udalov@gmail.com"
     end
   end
+
+  post %r{/comments/([^/]+)/(.*)} do |domain, path_escaped|
+    begin
+      url = domain + "/" + path_escaped.split("/").map { |c| URI.unescape(c) }.join("/")
+
+      @page = Page.find_or_initialize_by(:url => "http://" + url)
+
+      CommentsFetcher.perform_async(@page.url)
+
+      "OK"
+    rescue StandardError => ex
+      "ERROR: #{ex}"
+    end
+  end
 end

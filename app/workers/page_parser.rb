@@ -1,8 +1,13 @@
 class PageParser
   include Sidekiq::Worker
 
-  def perform(page_url)
-    page = Page.find_or_create_by(page_url)
+  def perform(page_url_or_id)
+
+    page = if page_url_or_id.is_a? Numeric
+             Page.find page_url_or_id
+           else
+             Page.find_or_create_by(url: page_url)
+           end
 
     rca = YandexRca.new
 

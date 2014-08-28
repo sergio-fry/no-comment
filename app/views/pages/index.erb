@@ -32,7 +32,7 @@
 <center><h1>Сейчас обсуждают</h1></center>
 
 <table cellspacing="10px">
-  <% for group in Page.published.order("created_at DESC").limit(9).in_groups_of(3, false) %>
+  <% for group in Page.published.order("comments_count DESC").where("created_at > ?", 1.week.ago).limit(9).in_groups_of(3, false) %>
     <tr>
       <% for page in group %>
         <td valign="top">
