@@ -56,7 +56,7 @@ class PagesController < Sinatra::Base
 
     if @page.new_record?
       @page.save!
-      PageParser.perform_async(@page.id)
+      PageParser.perform_async(@page.url)
     end
 
     case @page.status
