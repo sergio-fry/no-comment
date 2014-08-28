@@ -6,7 +6,7 @@ class PageParser
     page = if page_url_or_id.is_a? Numeric
              Page.find page_url_or_id
            else
-             Page.find_or_create_by(url: page_url)
+             Page.find_or_create_by(url: page_url_or_id)
            end
 
     rca = YandexRca.new
