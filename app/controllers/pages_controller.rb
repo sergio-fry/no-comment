@@ -35,6 +35,13 @@ class PagesController < Sinatra::Base
     def simple_format(text)
       text.split("\n").map { |l| "<p>#{l}</p>" }.join
     end
+
+    def resize_image(url, width, height=nil)
+      sizes = "w=#{width}"
+      sizes += "&h=#{height}" if height.present?
+
+      "http://pic.russianpulse.ru/resize?src=#{URI.encode_www_form_component(url)}&#{sizes}"
+    end
   end
 
   use ActiveRecord::ConnectionAdapters::ConnectionManagement
