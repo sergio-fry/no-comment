@@ -53,9 +53,6 @@
     .sidebar .article a:hover { text-decoration: underline; }
 
     .article .description { font-size: 120%; font-family: "Times New Roman", "Free Serif", Times, serif }
-
-    .red { color: red }
-    a.red  { color: red }
   </style>
 </head>
 <body>
@@ -71,26 +68,19 @@
         <div class="modal fade" id="add-article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
-                <h4 class="modal-title" id="myModalLabel">Предложить новость для обсуждения</h4>
-              </div>
-              <div class="modal-body">
-
-                <form id="add-page-form" class="add-page-form">
-                  <table width="100%">
-                    <tr>
-                      <td width="100%" valign="top">
-                        <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 150%" />
-                      </td>
-                      <td align="right" valign="top">
-                        <input type="submit" value="Комментировать!" style="font-size: 150%" />
-                        <em style="font-size: 120%">(без регистрации)</em>
-                      </td>
-                    </tr>
-                  </table>
-                </form>
-              </div>
+              <form id="add-page-form" class="add-page-form">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Предложить новость для обсуждения</h4>
+                </div>
+                <div class="modal-body">
+                  <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 150%" />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Я передумал</button>
+                  <input type="submit" value="Добавить" class="btn btn-primary" />
+                </div>
+              </form>
             </div>
           </div>
         </div>
