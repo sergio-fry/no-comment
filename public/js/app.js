@@ -9,7 +9,7 @@
 
       var path = url.split(domain)[1].split("/").map(function(c) { return encodeURIComponent(c) }).join("/");
 
-      window.location.href = "/comments/" + domain + path;
+      window.location.href = "/обсуждение/" + domain + path;
     }
 
     return false;
@@ -19,8 +19,8 @@
     var w = $(this);
 
     w.find(".toggle-button").click(function() {
-      w.find(".section-1").toggle();
-      w.find(".section-2").toggle();
+      w.find(".section-1").toggleClass("hidden");
+      w.find(".section-2").toggleClass("hidden");
 
       if(w.find(".section-1").is(":visible")) {
         $(this).text($(this).attr("data-text-1"));

@@ -13,36 +13,34 @@
 <style>
 </style>
 
-<small>Владелец сайта <img src="<%= favicon_url(@page.domain) %>" width="11" height="11" /> <a href="/comments/<%= @page.domain %>"><%= @page.domain %></a> запретил комментарии к статье <em>"<%= @page.title %>"</em>. <strong>А мы &mdash; разрешаем!</strong> Комментируйте на здоровье.</small>
+<div class="article">
+  <h1><%= @page.title %></h1>
 
-<h1><%= @page.title %></h1>
+  <% if @page.video.present? %>
+    <p><%= video_tag @page.video %></p>
+  <% elsif @page.img.present? %>
+    <img src="<%= @page.img %>" />
+  <% end %>
 
+  <% if @page.text.mb_chars.size > 512 %>
+    <div class="widget description" data-widget="toggable">
+      <div class="section-1">
+        <p><%= simple_format(@page.text.truncate(512, omission: "…")) %></p>
+      </div>
+      <div class="section-2 hidden">
+        <p><%= simple_format @page.text %></p>
 
-<% if @page.video.present? %>
-  <p><%= video_tag @page.video %></p>
-<% elsif @page.img.present? %>
-  <img src="<%= @page.img %>" />
-<% end %>
-
-<% if @page.text.mb_chars.size > 512 %>
-  <div class="widget" data-widget="toggable">
-    <div class="section-1">
-      <p><%= simple_format(@page.text.truncate(512, omission: "…")) %></p>
+        <img src="<%= favicon_url(@page.domain) %>" width="16" height="16" /> <a href="<%= @page.url %>" target="_blank" title="Источник"><%= @page.domain %></a>
+        <br />
+        <br />
+      </div>
+      <button class="toggle-button" data-text-1="Развернуть" data-text-2="Свернуть">Развернуть</button>
     </div>
-    <div class="section-2 hidden">
-      <p><%= simple_format @page.text %></p>
-
-      <img src="<%= favicon_url(@page.domain) %>" width="16" height="16" /> <a href="<%= @page.url %>" target="_blank" title="Источник"><%= @page.domain %></a>
-      <br />
-      <br />
-    </div>
-    <button class="toggle-button" data-text-1="Развернуть" data-text-2="Свернуть">Развернуть</button>
-  </div>
-<% else %>
-  <p><%= simple_format @page.text %></p>
-  <img src="<%= favicon_url(@page.domain) %>" width="16" height="16" /> <a href="<%= @page.url %>" target="_blank" title="Источник"><%= @page.domain %></a>
-<% end %>
-
+  <% else %>
+    <p><%= simple_format @page.text %></p>
+    <img src="<%= favicon_url(@page.domain) %>" width="16" height="16" /> <a href="<%= @page.url %>" target="_blank" title="Источник"><%= @page.domain %></a>
+  <% end %>
+</div>
 
 
 <div class="share-buttons">
@@ -97,10 +95,10 @@ _hcwp.push(_hc_settings);
 
 <br />
 
-<% other_pages = Page.where(:domain => @page.domain).where.not(:id => @page.id).order("created_at DESC").limit(3) %>
+<% other_pages = Page.where(:domain => @page.domain).where.not(:id => @page.id).with_comments.recent.limit(3) %>
 
 <% if other_pages.present? %>
-  <strong>Что еще комментируют на сайте <a href="/comments/<%= @page.domain %>"><%= @page.domain %></a></strong>
+  <strong>Что еще комментируют на сайте <a href="<%= page_path @page.domain %>"><%= @page.domain %></a></strong>
   <br />
   <br />
   <% for page in other_pages %>

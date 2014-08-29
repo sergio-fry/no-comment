@@ -4,6 +4,9 @@ class Page < ActiveRecord::Base
   serialize :additional_info, Hash
 
   scope :published, lambda { where(:status => STATUS_PUBLISHED) }
+  scope :popular, lambda { |period| where("created_at > ?", period.ago).where("comments_count >= ?", ENV["CONFIG_MIN_COMMENTS_COUNT"] || 3).order("comments_count DESC, created_at DESC") }
+  scope :with_comments, lambda { where("comments_count > 0") }
+  scope :recent, lambda { order("created_at DESC") }
 
   STATUS_NEW = 0
   STATUS_PUBLISHED = 1

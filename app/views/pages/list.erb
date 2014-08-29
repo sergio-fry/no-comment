@@ -29,7 +29,7 @@
         <% for domain in group %>
           <td valign="top">
             <div class="article">
-              <img src="<%= favicon_url domain %>" width="16" height="16" /> <a href="/comments/<%= domain %>"><%= domain %></a>
+              <img src="<%= favicon_url domain %>" width="16" height="16" /> <a href="<%= page_path domain %>"><%= domain %></a>
             </div>
           </td>
         <% end %>

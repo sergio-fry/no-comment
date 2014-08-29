@@ -1,6 +1,10 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset='UTF-8' />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
@@ -17,53 +21,145 @@
 
   <title><%= yield_content(:meta_title).presence || "No Comment! То, что обсуждать нельзя" %></title>
 
+
+  <!-- Bootstrap -->
+  <link href="/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
   <style>
-    body { font-size: 100% }
+    body { font-size: 150% }
    
-    #page { width: 100%;  max-width: 750px; text-align: left; }
-    #container { min-height: 300px }
+    #page { width: 100%;  max-width: 850px; text-align: left; }
+    #page-container { min-height: 300px }
+    
     #logo a { text-decoration: none; color: black }
+    #logo span { font-size: 220% }
+    #logo em { font-size: 120% }
+    
+    #top_menu a{ text-decoration: none; color: black; font-size: 120% }
     
     .hidden { display: none }
+
+    .sidebar h2 { font-size: 100%; color: grey }
+
+    .sidebar .article { padding-bottom: 20px; font-size: 120% }
+    .sidebar .article a { text-decoration: none; color: black }
+    .sidebar .article a:hover { text-decoration: underline; }
+
+    .article .description { font-size: 120%; font-family: "Times New Roman", "Free Serif", Times, serif }
+
+    .red { color: red }
+    a.red  { color: red }
   </style>
 </head>
 <body>
-  <center>
-    <div id="page">
-      <div>
-        <div id="logo">
-          <a href="/">
-            <span class="picture" style="float:left; font-size: 300%; padding-right: 15px">✍</span>
-            <span style="font-size: 200%;"> <strong>No Comment!</strong></span>
-            <br />
-            <em>То, что обсуждать нельзя</em>
-          </a>
+<br />
+  <div class="container" id="content">
+    <div class="row">
+      <div class="col-md-3 sidebar">
+        <button href="#" data-toggle="modal" data-target="#add-article" class="btn btn-default ">
+          Подсказать новость
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="add-article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
+                <h4 class="modal-title" id="myModalLabel">Предложить новость для обсуждения</h4>
+              </div>
+              <div class="modal-body">
+
+                <form id="add-page-form" class="add-page-form">
+                  <table width="100%">
+                    <tr>
+                      <td width="100%" valign="top">
+                        <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 150%" />
+                      </td>
+                      <td align="right" valign="top">
+                        <input type="submit" value="Комментировать!" style="font-size: 150%" />
+                        <em style="font-size: 120%">(без регистрации)</em>
+                      </td>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <span style="clear:both"></span>
+
+        <h2>Сейчас обсуждают</h2>
+        <% for page in Page.published.popular(1.week).limit(9) %>
+          <div class="article">
+            <a href="<%= page_path page.url %>"><%= page.title %></a>
+          </div>
+        <% end %>
+        <a href="/обсуждение">…что еще?</a>
+
+        <br />
+        <br />
+        <h2>Новое</h2>
+        <% for page in Page.published.recent.limit(9) - Page.published.popular(1.week).limit(9) %>
+          <div class="article">
+            <a href="<%= page_path page.url %>"><%= page.title %></a>
+          </div>
+        <% end %>
       </div>
 
-      <hr />
-      <br />
-      <br />
+      <div class="col-md-9">
+        <div>
+          <table width="100%">
+            <tr>
+              <td>
+                <div id="logo">
+                  <a href="/">
+                    <span> <strong>No Comment!</strong></span>
+                    <br />
+                    <em>То, что обсуждать нельзя</em>
+                  </a>
+                </div>
+              </td>
 
-      <div id="container">
-        <%= yield %>
+              <td valign="bottom" align="right">
+                <div id="top_menu">
+
+                  <a href="/о-сайте">О сайте</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <span style="clear:both"></span>
+        </div>
+
+        <hr />
+
+        <div id="page-container">
+          <%= yield %>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <hr />
+        <footer>
+          2014 &copy; <a href="/">No comment!</a>, <a href="http://no-comment.reformal.ru/">Отзывы и предложения</a>, Автор идеи: <a href="http://www.sergei-udalov.ru" target="_blank">Сергей Удалов</a>
+          <%= erb "shared/counter".to_sym %>
+        </footer>
       </div>
-
-      <br />
-      <br />
-      <br />
-
-      <hr />
-      <footer>
-        2014 &copy; <a href="/">No comment!</a>, <a href="http://no-comment.reformal.ru/">Отзывы и предложения</a>, Автор идеи: <a href="http://www.sergei-udalov.ru" target="_blank">Сергей Удалов</a>
-        <%= erb "shared/counter".to_sym %>
-      </footer>
     </div>
-  </center>
+  </div>
 
   </body>
 
   <script type="text/javascript" src="/js/vendor/jquery.min.js"></script>
+  <script src="/twitter-bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/app.js"></script>
 </html>

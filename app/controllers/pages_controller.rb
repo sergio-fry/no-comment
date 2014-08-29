@@ -9,7 +9,7 @@ class PagesController < Sinatra::Base
 
       path = path.split("/").map { |c| URI.encode_www_form_component(c) }.join("/")
 
-      "/comments/#{path}"
+      "/обсуждение/#{path}"
     end
 
     def video_tag(url)
@@ -46,17 +46,21 @@ class PagesController < Sinatra::Base
     erb "pages/index".to_sym, :layout => :layout
   end
 
-  get %r{/comments/?$} do
+  get %r{/#{URI.encode_www_form_component("о-сайте")}/?$} do
+    erb "pages/about".to_sym, :layout => :layout
+  end
+
+  get %r{/#{URI.encode_www_form_component("обсуждение")}/?$} do
     erb "pages/list".to_sym, :layout => :layout
   end
 
   # domain
-  get %r{/comments/([^/]+)[/]?$} do |domain|
+  get %r{/#{URI.encode_www_form_component("обсуждение")}/([^/]+)[/]?$} do |domain|
     @domain = domain
     erb "pages/domain".to_sym, :layout => :layout
   end
 
-  get %r{/comments/([^/]+)/(.*)} do |domain, path_escaped|
+  get %r{/#{URI.encode_www_form_component("обсуждение")}/([^/]+)/(.*)} do |domain, path_escaped|
     url = domain + "/" + path_escaped.split("/").map { |c| URI.unescape(c) }.join("/")
 
     @page = Page.find_or_initialize_by(:url => "http://" + url)
@@ -77,7 +81,7 @@ class PagesController < Sinatra::Base
     end
   end
 
-  post %r{/comments/([^/]+)/(.*)} do |domain, path_escaped|
+  post %r{/#{URI.encode_www_form_component("обсуждение")}/([^/]+)/(.*)} do |domain, path_escaped|
     begin
       url = domain + "/" + path_escaped.split("/").map { |c| URI.unescape(c) }.join("/")
 
