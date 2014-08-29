@@ -24,7 +24,7 @@
   </table>
 </form>
 
-<% pages = Page.published.where(:domain => Page.prepare_domain(@domain)).order("created_at DESC").limit(81) %>
+<% pages = Page.published.with_comments.where(:domain => Page.prepare_domain(@domain)).recent.limit(32) %>
 <% if pages.present? %>
   <br />
   <br />
@@ -32,19 +32,9 @@
   <br />
   <h2>Материалы, которые уже комментируют</h2>
 
-  <table cellspacing="10px">
-    <% for group in pages.in_groups_of(3, false) %>
-      <tr>
-        <% for page in group %>
-          <td valign="top">
-            <div class="article">
-              <img src="<%= favicon_url page.domain %>" width="16" height="16" /> <a href="<%= page_path page.url %>"><%= page.title %></a>
-            </div>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
+  <% for page in pages %>
+    <%= partial "pages/_page_preview".to_sym, :locals => { :page  => page } %>
+  <% end %>
 <% end %>
 
 <br />

@@ -6,6 +6,8 @@ gem 'ruby-app-ar'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'sinatra-partial'
+gem 'haml'
 
 gem 'sidekiq'
 

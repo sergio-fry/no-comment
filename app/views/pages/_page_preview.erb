@@ -1,0 +1,16 @@
+<div class="article row">
+  <div class="col-md-12">
+    <h2><a href="<%= page_path page.url %>"><%= page.title %></a></h2>
+    <span class="domain"><img src="<%= favicon_url page.domain %>" width="16" height="16" /> <%= page.domain %></span>
+    <div class="description">
+      <p>
+        <% if page.img.present? %>
+          <img align="left" src="<%= resize_image page.img, 132, 74 %>" width="132" height="74" />
+        <% end %>
+
+        <%= page.text.truncate(212, omission: "…") %>
+      </p>
+    </div>
+  </div>
+</div>
+

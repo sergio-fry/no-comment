@@ -1,7 +1,11 @@
 require 'sinatra/content_for'
+require 'sinatra/partial'
 
 class PagesController < Sinatra::Base
   helpers Sinatra::ContentFor
+  register Sinatra::Partial
+
+  set :partial_template_engine, :erb
 
   helpers do
     def page_path(url)
