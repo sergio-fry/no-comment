@@ -1,3 +1,5 @@
+require 'net/http'
+
 class CommentsFetcher
   include Sidekiq::Worker
 
