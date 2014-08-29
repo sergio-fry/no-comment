@@ -13,14 +13,10 @@ class PagesController < Sinatra::Base
     end
 
     def video_tag(url)
-      if url.match /youtu/
-        "<iframe src='#{url}' width='420px' height='315px'  frameborder='0' allowfullscreen></iframe>"
-      else
-        <<-EMBEDLY
-        <a class="embedly-card" data-card-chrome="0" href="#{url}">Загрузка видео...</a>
-        <script>!function(a){var b="embedly-platform",c="script";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b,d.src=("https:"===document.location.protocol?"https":"http")+"://cdn.embedly.com/widgets/platform.js";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}}(document);</script>
-        EMBEDLY
-      end
+      <<-EMBEDLY
+      <a class="embedly-card" data-card-chrome="0" href="#{url}">Загрузка видео...</a>
+      <script>!function(a){var b="embedly-platform",c="script";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b,d.src=("https:"===document.location.protocol?"https":"http")+"://cdn.embedly.com/widgets/platform.js";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}}(document);</script>
+      EMBEDLY
     end
 
     def favicon_url(url_or_domail)
