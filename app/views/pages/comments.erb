@@ -19,7 +19,7 @@
   <% if @page.video.present? %>
     <p><%= video_tag @page.video %></p>
   <% elsif @page.img.present? %>
-    <img src="<%= @page.img %>" />
+    <img src="<%= @page.img %>" class="img-responsive" />
   <% end %>
 
   <% if @page.text.mb_chars.size > 512 %>
