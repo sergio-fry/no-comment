@@ -9,6 +9,7 @@
         <% end %>
 
         <%= page.text.truncate(212, omission: "…") %>
+        &nbsp; <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %>
       </p>
     </div>
   </div>

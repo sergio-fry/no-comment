@@ -59,6 +59,8 @@
     .article-list .article { padding-bottom: 30px }
     .article-list img { margin-right: 10px }
     .article-list .article .domain { font-size: 100% }
+
+    .glyphicon-comment { color: grey }
   </style>
 </head>
 <body>
@@ -94,17 +96,16 @@
         <h2>Сейчас обсуждают</h2>
         <% for page in Page.published.popular(1.week).limit(9) %>
           <div class="article">
-            <a href="<%= page_path page.url %>"><%= page.title %></a>
+            <a href="<%= page_path page.url %>"><%= page.title %></a>  &nbsp; <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %>
           </div>
         <% end %>
-        <a href="/обсуждение">…что еще?</a>
 
         <br />
         <br />
         <h2>Новое</h2>
-        <% for page in Page.published.recent.limit(9) - Page.published.popular(1.week).limit(9) %>
+        <% for page in Page.published.with_comments.recent.limit(9) - Page.published.popular(1.week).limit(9) %>
           <div class="article">
-            <a href="<%= page_path page.url %>"><%= page.title %></a>
+            <a href="<%= page_path page.url %>"><%= page.title %></a>  &nbsp; <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %>
           </div>
         <% end %>
       </div>
