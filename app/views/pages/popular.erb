@@ -1,0 +1,11 @@
+<% content_for :meta_description do %>
+  Самые обсуждаемы темы на No Comment!
+<% end %>
+
+<h1>Самые обсуждаемы темы</h1>
+<div class="article-list">
+  <% for page in Page.published.with_comments.recent.limit(10) %>
+    <%= partial "pages/_page_preview".to_sym, :locals => { :page  => page } %>
+  <% end %>
+</div>
+

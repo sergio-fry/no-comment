@@ -1,0 +1,23 @@
+<% content_for :meta_description do %>
+Здесь можно обсуждать то, что обсуждать запрещено. Владелец сайта запретил комменатрии? Комментировать можно на No Comment!
+<% end %>
+
+
+<h1>Обсуждаемые сайты</h1>
+
+<% domains = Page.group(:domain).count.sort_by { |r| -r[1] }.map(&:first) %>
+
+<table cellspacing="10px">
+  <% for group in domains.in_groups_of(3, false) %>
+    <tr>
+      <% for domain in group %>
+        <td valign="top">
+          <div class="article">
+            <img src="<%= favicon_url domain %>" width="16" height="16" /> <a href="<%= page_path domain %>"><%= domain %></a>
+          </div>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+

@@ -57,8 +57,13 @@ class PagesController < Sinatra::Base
     erb "pages/about".to_sym, :layout => :layout
   end
 
+  get %r{/#{URI.encode_www_form_component("сайты")}/?$} do
+    erb "pages/sites".to_sym, :layout => :layout
+  end
+
   get %r{/#{URI.encode_www_form_component("обсуждение")}/?$} do
-    erb "pages/list".to_sym, :layout => :layout
+    @pages = Page.published.popular(1.week).limit(10)
+    erb "pages/popular".to_sym, :layout => :layout
   end
 
   # domain
