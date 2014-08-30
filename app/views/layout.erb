@@ -24,6 +24,7 @@
 
   <!-- Bootstrap -->
   <link href="/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/simple-sidebar.css" rel="stylesheet">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,7 +47,8 @@
     
     .hidden { display: none }
 
-    .sidebar h2 { font-size: 100%; color: grey }
+
+    .sidebar-nav h2 { font-size: 100%; color: #555 }
 
     .sidebar .article { padding-bottom: 20px; font-size: 120% }
     .sidebar .article a { text-decoration: none; color: black }
@@ -60,100 +62,120 @@
     .article-list img { margin-right: 10px }
     .article-list .article .domain { font-size: 100% }
 
-    .glyphicon-comment { color: grey }
   </style>
 </head>
 <body>
-<br />
-  <div class="container" id="content">
-    <div class="row">
-      <div class="col-md-3 sidebar">
-        <button href="#" data-toggle="modal" data-target="#add-article" class="btn btn-default ">
-          Подсказать новость
+
+<div id="wrapper">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand hidden">
+        <a href="#">
+          Start Bootstrap
+        </a>
+      </li>
+
+      <li style="padding-top:10px">
+        <button href="#" data-toggle="modal" data-target="#add-article" class="btn btn-default " title="Подсказать новость">
+          <span class="glyphicon glyphicon-plus"></span>
         </button>
+        <button class="btn btn-default " title="Новые комментарии">
+          <span class="glyphicon glyphicon-comment"></span>
+        </button>
+      </li>
+      <li style="padding-top: 8px">
+      </li>
+      <li>
+      <a href="/обсуждение" style="color: #888;">Сейчас обсуждают</a>
+      </li>
+      <% for page in Page.published.popular(1.week).limit(9) %>
+        <li class="article">
+          <a href="<%= page_path page.url %>" title="<%= page.title %>"><%= page.title.truncate(30, omission: "…") %> <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %></a> 
+        </li>
+      <% end %>
+    </ul>
+  </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="add-article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <form id="add-page-form" class="add-page-form">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Предложить новость для обсуждения</h4>
-                </div>
-                <div class="modal-body">
-                  <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 150%" />
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Я передумал</button>
-                  <input type="submit" value="Добавить" class="btn btn-primary" />
-                </div>
-              </form>
-            </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            <table width="100%">
+              <tr>
+                <td>
+                  <div id="logo">
+                    <a href="/">
+                      <span> <strong>No Comment!</strong></span>
+                      <br />
+                      <em>То, что обсуждать нельзя</em>
+                    </a>
+                  </div>
+                </td>
+
+                <td valign="bottom" align="right">
+                  <div id="top_menu">
+
+                    <a href="/о-сайте">О сайте</a>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <span style="clear:both"></span>
           </div>
-        </div>
 
-        <h2>Сейчас обсуждают</h2>
-        <% for page in Page.published.popular(1.week).limit(9) %>
-          <div class="article">
-            <a href="<%= page_path page.url %>"><%= page.title %></a>  &nbsp; <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %>
+          <hr />
+
+          <div id="page-container">
+            <%= yield %>
           </div>
-        <% end %>
 
-        <br />
-        <br />
-        <h2>Новое</h2>
-        <% for page in Page.published.with_comments.recent.limit(9) - Page.published.popular(1.week).limit(9) %>
-          <div class="article">
-            <a href="<%= page_path page.url %>"><%= page.title %></a>  &nbsp; <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %>
-          </div>
-        <% end %>
-      </div>
+          <br />
+          <br />
+          <br />
 
-      <div class="col-md-9">
-        <div>
-          <table width="100%">
-            <tr>
-              <td>
-                <div id="logo">
-                  <a href="/">
-                    <span> <strong>No Comment!</strong></span>
-                    <br />
-                    <em>То, что обсуждать нельзя</em>
-                  </a>
-                </div>
-              </td>
+          <hr />
+          <footer>
+            2014 &copy; <a href="/">No comment!</a>, <a href="http://no-comment.reformal.ru/">Отзывы и предложения</a>, Автор идеи: <a href="http://www.sergei-udalov.ru" target="_blank">Сергей Удалов</a>
+            <%= erb "shared/counter".to_sym %>
+          </footer>
 
-              <td valign="bottom" align="right">
-                <div id="top_menu">
 
-                  <a href="/о-сайте">О сайте</a>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <span style="clear:both"></span>
+
         </div>
-
-        <hr />
-
-        <div id="page-container">
-          <%= yield %>
-        </div>
-
-        <br />
-        <br />
-        <br />
-
-        <hr />
-        <footer>
-          2014 &copy; <a href="/">No comment!</a>, <a href="http://no-comment.reformal.ru/">Отзывы и предложения</a>, Автор идеи: <a href="http://www.sergei-udalov.ru" target="_blank">Сергей Удалов</a>
-          <%= erb "shared/counter".to_sym %>
-        </footer>
       </div>
     </div>
   </div>
+  <!-- /#page-content-wrapper -->
 
+</div>
+<!-- /#wrapper -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="add-article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="add-page-form" class="add-page-form">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
+              <h4 class="modal-title" id="myModalLabel">Предложить новость для обсуждения</h4>
+            </div>
+            <div class="modal-body">
+              <input type="text" name="url" id="url" placeholder="URL-адрес статьи, видео или страницы" style="width: 100%; font-size: 150%" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Я передумал</button>
+              <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 
   <script type="text/javascript" src="/js/vendor/jquery.min.js"></script>
