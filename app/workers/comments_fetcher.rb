@@ -26,6 +26,8 @@ class CommentsFetcher
     page.comments_count = JSON.parse(page.additional_info["hypercomments"]["data"][1])["cm2"]
 
     page.save!
+
+    page.build_comments_from_hc_data
   end
 end
 

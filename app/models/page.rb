@@ -1,4 +1,6 @@
 class Page < ActiveRecord::Base
+  has_many :comments, :foreign_key => :url, :primary_key => :url
+
   validates :url, :presence => true
   validates :domain, :presence => true
   serialize :additional_info, Hash
@@ -45,5 +47,21 @@ class Page < ActiveRecord::Base
 
   def self.prepare_domain(domain)
     SimpleIDN.to_unicode(domain)
+  end
+
+  def build_comments_from_hc_data
+    JSON.parse(additional_info["hypercomments"]["data"][1])["comments"].each do |hc_comment|
+      begin
+        comments.create({
+          :hc_id => hc_comment["id"],
+          :url => url,
+          :acc_id => hc_comment["acc_id"],
+          :created_at => Time.parse(hc_comment["time"]),
+          :additional_info => { "hypercomments" => hc_comment },
+        })
+      rescue StandardError => ex
+        logger.error "Can't create comment: #{ex}, #{hc_comment}"
+      end
+    end
   end
 end
