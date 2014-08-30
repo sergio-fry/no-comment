@@ -16,6 +16,10 @@ class PagesController < Sinatra::Base
       "/обсуждение/#{path}"
     end
 
+    def comment_path(comment)
+      page_path(comment.url) + "#hcm=" + comment.hc_id
+    end
+
     def video_tag(url)
       <<-EMBEDLY
       <a class="embedly-card" data-card-chrome="0" href="#{url}">Загрузка видео...</a>
@@ -59,6 +63,11 @@ class PagesController < Sinatra::Base
 
   get %r{/#{URI.encode_www_form_component("сайты")}/?$} do
     erb "pages/sites".to_sym, :layout => :layout
+  end
+
+  get %r{/#{URI.encode_www_form_component("комментарии")}/?$} do
+    @comments = Comment.order("created_at DESC").limit(10)
+    erb "pages/recent_comments".to_sym, :layout => :layout
   end
 
   get %r{/#{URI.encode_www_form_component("обсуждение")}/?$} do

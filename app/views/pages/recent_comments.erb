@@ -1,0 +1,23 @@
+<% content_for :meta_description do %>
+  Новые комментарии на No Comment!
+<% end %>
+
+<h1>Новые комментарии</h1>
+
+<% @comments.group_by{ |c| c.url }.each do |url, comments| %>
+  <h3><img src="<%= favicon_url(url) %>" width="24" height="24" /><a href="<%= page_path(url) %>" class="black"><%= Page.find_by_url(url).title %></a></h3>
+
+  <% for comment in comments %>
+    <blockquote>
+      <div class="media comment">
+        <a class="pull-left" href="#">
+          <img class="media-object" src="<%= comment.avatar_url %>" alt="<%= comment.nick %>" width="42" height="42" />
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><%= comment.nick %></h4>
+          <em><%= comment.text %></em> <a href="<%= comment_path(comment) %>"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+      </div>
+    </blockquote>
+  <% end %>
+<% end %>

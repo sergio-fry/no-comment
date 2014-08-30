@@ -35,6 +35,8 @@
 
   <style>
     body { font-size: 150%; color: black }
+    .black { color: black }
+    a.black { color: black }
    
     #page { width: 100%;  max-width: 850px; text-align: left; }
     #page-container { min-height: 300px }
@@ -80,7 +82,7 @@
         <button href="#" data-toggle="modal" data-target="#add-article" class="btn btn-default " title="Подсказать новость">
           <span class="glyphicon glyphicon-plus"></span>
         </button>
-        <button class="btn btn-default " title="Новые комментарии">
+        <button class="btn btn-default " title="Новые комментарии" onclick="window.location.href='/комментарии'">
           <span class="glyphicon glyphicon-comment"></span>
         </button>
       </li>
