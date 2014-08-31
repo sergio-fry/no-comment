@@ -70,7 +70,7 @@ _hcwp = window._hcwp || [];
 var _hc_settings = {
   widget:"Stream", widget_id:20856,
   xid: "<%= @page.url %>".replace(/http:\/\//, "").replace(/^www\./, ""),
-  href: "<%= @page.url %>".replace(/http:\/\//, "").replace(/^www\./, ""),
+  //href: "<%= @page.url %>".replace(/http:\/\//, "").replace(/^www\./, ""),
   callback: function(app, init) {
     ['streamMessage', 'streamDeleteMessage', 'streamEditMessage', 'streamLike', 'streamVoteMessage'].map(function(event_name) {
       app.on(event_name, function(packet) {

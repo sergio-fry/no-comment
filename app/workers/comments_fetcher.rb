@@ -13,7 +13,7 @@ class CommentsFetcher
     res = Net::HTTP.post_form(uri, :data => {
       "stream" => "streamstart",
       "widget_id" => 20856,
-      "href" => xid,
+      "href" => page_url,
       "xid" => xid,
       "limit" => 20,
       "filter" => "all",
@@ -28,6 +28,16 @@ class CommentsFetcher
     page.save!
 
     page.build_comments_from_hc_data
+  end
+
+  private
+  
+  def page_url(url)
+    path = url.strip.sub(/https?:\/\//, "")
+
+    path = path.split("/").map { |c| URI.encode_www_form_component(c) }.join("/")
+
+    "http://ноу-коммент.рф/обсуждение/#{path}"
   end
 end
 
