@@ -6,7 +6,6 @@ class Page < ActiveRecord::Base
   serialize :additional_info, Hash
 
   scope :published, lambda { where(:status => STATUS_PUBLISHED) }
-  scope :popular, lambda { |period| where("created_at > ?", period.ago).where("comments_count >= ?", ENV["CONFIG_MIN_COMMENTS_COUNT"] || 3).order("comments_count DESC, created_at DESC") }
   scope :with_comments, lambda { where("comments_count > 0") }
   scope :recent, lambda { order("created_at DESC") }
 
@@ -63,5 +62,12 @@ class Page < ActiveRecord::Base
         logger.error "Can't create comment: #{ex}, #{hc_comment}"
       end
     end
+  end
+
+  def self.popular(period)
+
+    min_comments_count = where("created_at > ?", period.ago).order("comments_count DESC").limit(10).last.try(:comments_count) || ENV["CONFIG_MIN_COMMENTS_COUNT"] || 3
+
+    where("created_at > ?", period.ago).where("comments_count >= ?", min_comments_count).order("comments_count DESC, created_at DESC")
   end
 end
