@@ -59,7 +59,7 @@ class Page < ActiveRecord::Base
           :additional_info => { "hypercomments" => hc_comment },
         })
       rescue StandardError => ex
-        logger.error "Can't create comment: #{ex}, #{hc_comment}"
+        App.logger.error "Can't create comment: #{ex}, #{hc_comment}"
       end
     end
   end
