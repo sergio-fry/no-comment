@@ -66,7 +66,7 @@ class PagesController < Sinatra::Base
   end
 
   get %r{/#{URI.encode_www_form_component("комментарии")}/?$} do
-    @comments = Comment.order("created_at DESC").limit(10)
+    @comments = Comment.order("created_at DESC").limit(30)
     erb "pages/recent_comments".to_sym, :layout => :layout
   end
 
