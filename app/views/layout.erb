@@ -33,17 +33,21 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <link href='http://fonts.googleapis.com/css?family=Neucha&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
   <style>
-    body { font-size: 150%; color: black }
-    .black { color: black }
-    a.black { color: black }
+    body { font-size: 150%; color: #333; font-family: "Free Sans", Arial, Helvetica, sans-serif; }
+    .brand-font { font-family: 'Neucha', cursive, "Times New Roman", "Free Serif", Times, serif; }
+
+    .black { color: #333 }
+    a.black { color: #333 }
    
     #page { width: 100%;  max-width: 850px; text-align: left; }
     #page-container { min-height: 300px }
     
-    #logo a { text-decoration: none; color: black }
+    #logo a { text-decoration: none; color: black; font-family: 'Neucha', cursive, "Times New Roman", "Free Serif", Times, serif; }
     #logo span { font-size: 220% }
     #logo em { font-size: 120% }
+    #logo sub { font-weight: normal; font-size: 50%; padding-left: 5px; color: grey; font-family: "Free Sans", Georgia, serif; }
     
     #top_menu a{ text-decoration: none; color: black; font-size: 120%; padding-left: 15px }
     
@@ -64,6 +68,13 @@
     .article-list img { margin-right: 10px }
     .article-list .article .domain { font-size: 100% }
 
+    .comment-author { font-family: "Times New Roman", "Free Serif", Times, serif; }
+    .comment-text { font-family: 'Neucha', cursive, "Times New Roman", "Free Serif", Times, serif; }
+
+    .glyphicon-comment { color: #aaa }
+    #top_menu .glyphicon-comment { color: #333 }
+
+    h1,h2,h3,h4,h5 { font-family: 'Neucha', cursive, "Times New Roman", "Free Serif", Times, serif;}
   </style>
 </head>
 <body>
@@ -72,12 +83,6 @@
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-      <li class="sidebar-brand hidden">
-        <a href="#">
-          Start Bootstrap
-        </a>
-      </li>
-
       <li style="padding-top:10px">
         <button href="#" data-toggle="modal" data-target="#add-article" class="btn btn-primary " title="Подсказать новость">
           <span class="glyphicon glyphicon-plus"></span>
@@ -98,7 +103,7 @@
       </li>
       <% for comment in Comment.order("created_at DESC").limit(5) %>
         <li>
-          <a href="<%= comment_path comment %>" title="<%= comment.nick %>"><img src="<%= comment.avatar_url %>" width="32" height="32" />  <%= comment.text.truncate(30, omission: "…") %></a> 
+          <a href="<%= comment_path comment %>" title="<%= comment.nick %>" class="comment-text"><img src="<%= comment.avatar_url %>" width="32" height="32" />  <%= comment.text.truncate(30, omission: "…") %></a> 
         </li>
       <% end %>
     </ul>
@@ -117,20 +122,22 @@
                 <td>
                   <div id="logo">
                     <a href="/">
-                      <span> <strong>No Comment!</strong></span>
-                      <br />
-                      <em>То, что обсуждать нельзя</em>
+                      <span> <strong>No Comment!<sub>beta</sub></strong></span>
                     </a>
                   </div>
                 </td>
 
-                <td valign="bottom" align="right">
+                <td valign="middle" align="right">
                   <div id="top_menu">
-                    <a href="#" data-toggle="modal" data-target="#add-article" class="btn btn-primary " title="Подсказать новость" style="color: white">
-                      Подсказать новость
+                    <a href="#"  title="Меню" id="menu-toggle">
+                      <span class="glyphicon glyphicon-align-justify"></span>
                     </a>
-                    <a href="/обсуждение">Обсуждения</a>
-                    <a href="/комментарии">Комментарии</a>
+                    <a href="/обсуждение" title="Обсуждения">
+                      <span class="glyphicon glyphicon-fire"></span>
+                    </a>
+                    <a href="/комментарии" title="Новые комментарии">
+                      <span class="glyphicon glyphicon-comment"></span>
+                    </a>
                     <a href="/о-сайте">Где я?</a>
                   </div>
                 </td>
@@ -192,4 +199,11 @@
   <script type="text/javascript" src="/js/vendor/jquery.min.js"></script>
   <script src="/twitter-bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/app.js"></script>
+
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
 </html>

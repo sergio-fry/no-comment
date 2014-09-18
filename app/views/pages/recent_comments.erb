@@ -14,8 +14,8 @@
           <img class="media-object" src="<%= comment.avatar_url %>" alt="<%= comment.nick %>" width="42" height="42" />
         </a>
         <div class="media-body">
-          <h4 class="media-heading"><%= comment.nick %></h4>
-          <em><%= comment.text %></em> <a href="<%= comment_path(comment) %>"><span class="glyphicon glyphicon-chevron-right"></span></a>
+          <h4 class="media-heading comment-author"><%= comment.nick %></h4>
+          <em class="comment-text"><%= comment.text %></em> <a href="<%= comment_path(comment) %>"><span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>
       </div>
     </blockquote>
