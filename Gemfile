@@ -20,6 +20,7 @@ gem 'addressable', :require => "addressable/uri"
 gem 'unicorn'
 
 group :production do
+  gem 'foreman'
 end
 
 group :development do
