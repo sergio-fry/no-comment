@@ -15,7 +15,7 @@
 
   <meta property="og:type" content="article" />
 
-  <meta property="og:title" content="<%= yield_content(:meta_title).truncate(140, omission: "…") rescue nil %>" />
+  <meta property="og:title" content="<%= yield_content(:meta_title).to_s.truncate(140, omission: "…") %>" />
   <meta property="og:image" content="<%= yield_content :share_image %>" />
   <link rel="image_src" href="<%= yield_content :share_image %>" />
 
