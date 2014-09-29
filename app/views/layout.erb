@@ -10,12 +10,12 @@
 
   <meta content="комментарии, комментировать, запрещено, отключено, забанен, заблокирован, no comment" name="keywords"></meta>
 
-  <meta name="description" content="<%= yield_content(:meta_description).gsub(/\s+/, " ").mb_chars.truncate(160, omission: "…") %>" /> 
-  <meta property="og:description" content="<%= yield_content(:meta_description).gsub(/\s+/, " ").mb_chars.truncate(160, omission: "…") %>" />
+  <meta name="description" content="<%= yield_content(:meta_description).gsub(/\s+/, " ").mb_chars.truncate(160, omission: "…") rescue nil %>" /> 
+  <meta property="og:description" content="<%= yield_content(:meta_description).gsub(/\s+/, " ").mb_chars.truncate(160, omission: "…") nil %>" />
 
   <meta property="og:type" content="article" />
 
-  <meta property="og:title" content="<%= yield_content(:meta_title).truncate(140, omission: "…") %>" />
+  <meta property="og:title" content="<%= yield_content(:meta_title).truncate(140, omission: "…") nil %>" />
   <meta property="og:image" content="<%= yield_content :share_image %>" />
   <link rel="image_src" href="<%= yield_content :share_image %>" />
 
@@ -95,7 +95,7 @@
       </li>
       <% for page in Page.published.popular(1.week).limit(5) %>
         <li>
-          <a href="<%= page_path page.url %>" title="<%= page.title %>"><%= page.title.truncate(30, omission: "…") %> <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %></a> 
+          <a href="<%= page_path page.url %>" title="<%= page.title %>"><%= page.title.to_s.truncate(30, omission: "…") %> <span class="glyphicon glyphicon-comment"></span> <%= page.comments_count %></a> 
         </li>
       <% end %>
       <li>
