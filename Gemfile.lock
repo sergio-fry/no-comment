@@ -22,7 +22,8 @@ GEM
       timers (~> 1.1.0)
     connection_pool (2.0.0)
     diff-lcs (1.2.5)
-    haml (4.0.5)
+    haml (5.0.0)
+      temple (>= 0.8.0)
       tilt
     i18n (0.6.11)
     json (1.8.1)
@@ -76,6 +77,7 @@ GEM
       tilt (~> 1.3)
     sinatra-partial (0.4.0)
       sinatra
+    temple (0.8.2)
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
